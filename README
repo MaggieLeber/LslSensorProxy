@@ -1,6 +1,7 @@
-This is your new Play 2.0 application
-=====================================
+LslProxy -- MaggieL's first actual PlayFramework and Scala toy
+==============================================================
 
-This file will be packaged with your application, when using `play dist`.
+I'm writing this to learn Scala and PlayFramework. As you can see, I don't know squat about
+Markdown yet either. To make matters worse I'm a total Git noob.
 
-This file was modified by IntelliJ IDEA 12.0 for binding GitHub repository
+So many routes to #fail!
