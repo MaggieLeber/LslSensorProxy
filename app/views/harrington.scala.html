@@ -1,0 +1,31 @@
+@main("Harrington Region") {
+
+<div style="overflow: auto;width: 200px;border: aqua; border-width: 4px; border-style: groove" >
+    <h2 xmlns="http://www.w3.org/1999/html">Harrington</h2>
+    <div style="float:right">
+        <img  style="height: 75px;width:75px;" src="@routes.Assets.at("images/newGrayson.png")">
+    </div>
+</div>
+
+<div><a href="/sensor/6140/12046/70f8eb94-75f3-2198-19ad-caf4aff996b3">sensor</a></div>
+<div><a href="http://sim6140.agni.lindenlab.com:12046/cap/70f8eb94-75f3-2198-19ad-caf4aff996b3">sensor direct</a></div>
+<div id="data" ></div>
+<button id="fetchData">update</button>
+<script type="text/javascript">
+    $('#fetchData').click(function(evt) {
+            $('#errors').hide();
+            $.ajax({
+                type : 'GET',
+                url : "/sensor/6140/12046/70f8eb94-75f3-2198-19ad-caf4aff996b3",
+                success : function(data) {
+                    $('#data').html(showsensor(data));
+                },
+                error : function(data) {
+                    alert("oops:"+data);
+                }
+            });
+            return false;
+        });
+</script>
+
+}
