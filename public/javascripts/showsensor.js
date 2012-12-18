@@ -4,16 +4,18 @@ function showsensor(data) {
          html += " at: "+data.XSecondLifeLocalPosition;
          html += " in: "+data.body.parcel;
     html += "</div>";
-    html += "<div> Agents:";
+    html += "<h4>Agents in region</h4>"
+    html += "<table class=\"table table-striped table-bordered\"><thead><tr><th>Name</th><th>Key</th><th>pos</th><th>rot</th><th>vel</th><th>stat</th></tr></thead>";
     for (i=0;i<data.body.agents.length;i++){
-         html += "<div style=\"width : 600px; border: aqua; border-width: 2px; border-style: groove\">";
-         html += data.body.agents[i].name+" ("+data.body.agents[i].key+")";
-         html += "<div> pos: "+data.body.agents[i].pos+"</div>";
-         html += "<div> rot: "+data.body.agents[i].rot+"</div>";
-         html += "<div> vel: "+data.body.agents[i].vel+"</div>";
-         html += "<div> stat: "+data.body.agents[i].stat+"</div>";
-         html += "</div>";
+         html += "<tr>";
+         html += "<td>"+data.body.agents[i].name+"</td>"
+         html += "<td>"+data.body.agents[i].key+"</td>";
+         html += "<td>"+data.body.agents[i].pos+"</td>";
+         html += "<td>"+data.body.agents[i].rot+"</td>";
+         html += "<td>"+data.body.agents[i].vel+"</td>";
+         html += "<td>"+data.body.agents[i].stat+"</td>";
+         html += "</tr>";
          }
-    html += "</div>";
+    html += "</table>";
     return html;
 }
