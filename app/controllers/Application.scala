@@ -9,7 +9,7 @@ import scala.collection.immutable._
 import collection.JavaConversions._
 
 object Application extends Controller {
-
+  //todo: automatic sensor registration
   def harrington = Action {
     Ok(views.html.harrington())
   }

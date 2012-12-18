@@ -11,24 +11,43 @@
     </div>
     <div class="row">
             <div class="span10">
-                <button id="fetchData" class="btn btn-large"><i class="icon-retweet"></i> update sensor data</button>
+                <button id="fetchData" class="btn btn-large"><i class="icon-refresh"></i> update sensor data</button>
                 <button class="btn btn-large"><i class="icon-star"></i><a
-                        href="/sensor/6140/12046/70f8eb94-75f3-2198-19ad-caf4aff996b3">raw sensor data through proxy</a>
+                        href="/sensor/6140/12046/5be50dc4-f2f4-85ed-e45a-401978ebfcd8">raw sensor data through proxy</a>
                 </button>
                 <button class="btn  btn-large"><i class="icon-star"></i><a
-                        href="http://sim6140.agni.lindenlab.com:12046/cap/70f8eb94-75f3-2198-19ad-caf4aff996b3">data
+                        href="http://sim6140.agni.lindenlab.com:12046/cap/5be50dc4-f2f4-85ed-e45a-401978ebfcd8">data
                     direct from sensor</a></button>
             </div>
     </div>
 </div>
 
 <div id="data"></div>
+<div id="status legend" style="width: 25%">
+<table class="table table-striped tabled-bordered"><caption>Avatar status icon legend</caption>
+<thead><td>icon</td><td>status</td></thead>
+<tr><td><i class="icon-share-alt"            ></i> </td><td title="AGENT_ALWAYS_RUN	(0x1000)">has "Always Run" enabled; using tap-tap-hold</td></tr>
+<tr><td><i class="icon-tag"                  ></i> </td><td title="AGENT_ATTACHMENTS(0x0002)">has attachments                             </td></tr>
+<tr><td><i class="icon-plane icon-white" style="background-color:black"></i> </td><td title="AGENT_AUTOPILOT	(0x2000)">is in "autopilot" mode                      </td></tr>
+<tr><td><i class="icon-eye-close"            ></i> </td><td title="AGENT_AWAY	 	(0x0040)">is in "away" mode                           </td></tr>
+<tr><td><i class="icon-time"                 ></i> </td><td title="AGENT_BUSY	 	(0x0800)">is in "busy" mode                           </td></tr>
+<tr><td><i class="icon-chevron-down"         ></i> </td><td title="AGENT_CROUCHING	(0x0400)">is crouching                                </td></tr>
+<tr><td><i class="icon-plane"                ></i> </td><td title="AGENT_FLYING		(0x0001)">is flying or hovering                       </td></tr>
+<tr><td><i class="icon-arrow-up"             ></i> </td><td title="AGENT_IN_AIR		(0x0100)">is in the air (jumping, flying or falling)  </td></tr>
+<tr><td><i class="icon-eye-open"             ></i> </td><td title="AGENT_MOUSELOOK	(0x0008)">is in mouselook                             </td></tr>
+<tr><td><i class="icon-arrow-down icon-white" style="background-color:black"></i> </td><td title="AGENT_ON_OBJECT	(0x0020)">is sitting on an object (and linked to it)  </td></tr>
+<tr><td><i class="icon-file"                 ></i> </td><td title="AGENT_SCRIPTED	(0x0004)">has scripted attachments                    </td></tr>
+<tr><td><i class="icon-arrow-down"           ></i> </td><td title="AGENT_SITTING	(0x0010)">is sitting                                  </td></tr>
+<tr><td><i class="icon-comment"              ></i> </td><td title="AGENT_TYPING		(0x0200)">is typing                                   </td></tr>
+<tr><td><i class="icon-arrow-right"          ></i> </td><td title="AGENT_WALKING	(0x0080)">is walking running or crouch walking        </td></tr>
+</table>
+</div>
 <script type="text/javascript">
     $('#fetchData').click(function (evt) {
         $('#errors').hide();
         $.ajax({
             type: 'GET',
-            url: "/sensor/6140/12046/70f8eb94-75f3-2198-19ad-caf4aff996b3",
+            url: "/sensor/6140/12046/5be50dc4-f2f4-85ed-e45a-401978ebfcd8",
             success: function (data) {
                 $('#data').html(showsensor(data));
             },

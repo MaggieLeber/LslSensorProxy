@@ -1,19 +1,20 @@
+
 string URL = "";
 string locationStatus()
 {
     vector position = llGetPos();
     vector rota     = llRot2Euler(llGetRot());
     string text = vsList2JSON([  "region",llGetRegionName(),
-                                 "fps",llGetRegionFPS(),
+                                 "fps",llGetRegionFPS(), 
                                  "td",llGetRegionTimeDilation(),
                                  "memfree",llGetFreeMemory(),
                                  "parcel",llList2String(llGetParcelDetails(position,[PARCEL_DETAILS_NAME]),0),
                                  "pflags",llGetParcelFlags(position),
                                  "pos",position,
-                                 "rot",rota,
+                                 "rot",rota, 
                                  "agents",(key)getAgentsJSON(),
                                  "url",URL
-                             ]);
+                             ]); 
     return text;
 }
 
@@ -24,7 +25,7 @@ string getAgentData(key agentKey) {
                                       "rot",llList2Rot(llGetObjectDetails(agentKey,[OBJECT_ROT]),0),
                                       "vel",llList2Vector(llGetObjectDetails(agentKey,[OBJECT_VELOCITY]),0),
                                       "stat",llGetAgentInfo(agentKey)
-                                    ]);
+                                    ]);   
     return agentData;
 }
 
@@ -40,7 +41,7 @@ string getAgentsJSON() {
     while (++index < lengthOfList);
     agentJSON = llGetSubString(agentJSON,0,-2)+ "]";
     return agentJSON;
-}
+}    
 
 
 // http://wiki.secondlife.com/wiki/User:Vegas_Silverweb/LSL_to_JSON
@@ -50,7 +51,7 @@ list labels;
 if(llGetListLength(input) % 2 != 0) {
     llSay(DEBUG_CHANNEL,"vsList2JSON must be a 2-strided list!");
     return "{}";}
-
+ 
 string sTemp = "{";
 integer i;
 for(i=0;i<llGetListLength(input);i+=2) {
@@ -67,7 +68,7 @@ if(entryType>2 && entryType!=4)
     sTemp=sTemp+llList2String(input,i+1);
     if(llGetListLength(input)>i+2) sTemp=sTemp+",";
 }
-
+ 
 sTemp += "}";
 return sTemp;
 }
@@ -97,11 +98,12 @@ default
         llRequestURL();
         llSay(0, locationStatus());
     }
-
+ 
     http_request(key id, string method, string body)
     {
         if (method == URL_REQUEST_GRANTED) {
             llSay(0,"URL: " + body);
+            llInstantMessage(llGetOwner(),body + locationStatus());
             URL = body;
         }
         else if (method == URL_REQUEST_DENIED) {llSay(0, "Something went wrong, no url. " + body);}
