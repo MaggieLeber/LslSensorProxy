@@ -15,19 +15,19 @@ function agentStat(bitflags) {
     var AGENT_TYPING		= 0x0200;  // is typing  "icon-comment"
     var AGENT_WALKING	    = 0x0080;  // is walking running or crouch walking  "icon-arrow-right"
 
-    if ( (bitflags & AGENT_ALWAYS_RUN  ) > 0 ) { html += "<i class=\"icon-share-alt\"></i>"; }
-    if ( (bitflags & AGENT_ATTACHMENTS ) > 0 ) { html += "<i class=\"icon-tag\"></i>";}                  
-    if ( (bitflags & AGENT_AUTOPILOT   ) > 0 ) { html += "<i class=\"icon-plane icon-white\" style=\"background-color:black\"></i>";}
-    if ( (bitflags & AGENT_AWAY        ) > 0 ) { html += "<i class=\"icon-eye-close\"></i>";}            
-    if ( (bitflags & AGENT_BUSY        ) > 0 ) { html += "<i class=\"icon-time\"></i>";}                 
-    if ( (bitflags & AGENT_CROUCHING   ) > 0 ) { html += "<i class=\"icon-chevron-down\"></i>";}         
-    if ( (bitflags & AGENT_FLYING      ) > 0 ) { html += "<i class=\"icon-plane\"></i>";}                
-    if ( (bitflags & AGENT_IN_AIR      ) > 0 ) { html += "<i class=\"icon-arrow-up\"></i>";}             
-    if ( (bitflags & AGENT_MOUSELOOK   ) > 0 ) { html += "<i class=\"icon-eye-open\"></i>";}             
-    if ( (bitflags & AGENT_ON_OBJECT   ) > 0 ) { html += "<i class=\"icon-arrow-down icon-white\" style=\"background-color:black\"></i>";}
-    if ( (bitflags & AGENT_SCRIPTED    ) > 0 ) { html += "<i class=\"icon-file\"></i>";}                 
-    if ( (bitflags & AGENT_SITTING     ) > 0 ) { html += "<i class=\"icon-arrow-down\"></i>";}           
-    if ( (bitflags & AGENT_TYPING      ) > 0 ) { html += "<i class=\"icon-comment\"></i>";}              
-    if ( (bitflags & AGENT_WALKING     ) > 0 ) { html += "<i class=\"icon-arrow-right\"></i>";}
+    if ( (bitflags & AGENT_ALWAYS_RUN  ) > 0 ) { html += "<i title=\"running\" class=\"icon-share-alt\"></i>"; }
+    if ( (bitflags & AGENT_ATTACHMENTS ) > 0 ) { html += "<i title=\"attachments\"  class=\"icon-tag\"></i>";}
+    if ( (bitflags & AGENT_AUTOPILOT   ) > 0 ) { html += "<i title=\"autopilot\"  class=\"icon-plane icon-white\" style=\"background-color:black\"></i>";}
+    if ( (bitflags & AGENT_AWAY        ) > 0 ) { html += "<i title=\"away\" class=\"icon-eye-close\"></i>";}
+    if ( (bitflags & AGENT_BUSY        ) > 0 ) { html += "<i title=\"busy\" class=\"icon-time\"></i>";}
+    if ( (bitflags & AGENT_CROUCHING   ) > 0 ) { html += "<i title=\"crouching\" class=\"icon-chevron-down\"></i>";}
+    if ( (bitflags & AGENT_FLYING      ) > 0 ) { html += "<i title=\"flying\" class=\"icon-plane\"></i>";}
+    if ( (bitflags & AGENT_IN_AIR      ) > 0 ) { html += "<i title=\"in air\" class=\"icon-arrow-up\"></i>";}
+    if ( (bitflags & AGENT_MOUSELOOK   ) > 0 ) { html += "<i title=\"mouselook\" class=\"icon-eye-open\"></i>";}
+    if ( (bitflags & AGENT_ON_OBJECT   ) > 0 ) { html += "<i title=\"sitting on object\" class=\"icon-arrow-down icon-white\" style=\"background-color:black\"></i>";}
+    if ( (bitflags & AGENT_SCRIPTED    ) > 0 ) { html += "<i title=\"scripted attachments\" class=\"icon-file\"></i>";}
+    if ( (bitflags & AGENT_SITTING     ) > 0 ) { html += "<i title=\"sitting\" class=\"icon-arrow-down\"></i>";}
+    if ( (bitflags & AGENT_TYPING      ) > 0 ) { html += "<i title=\"typing\" class=\"icon-comment\"></i>";}
+    if ( (bitflags & AGENT_WALKING     ) > 0 ) { html += "<i title=\"walking\" class=\"icon-arrow-right\"></i>";}
     return html;
 }
