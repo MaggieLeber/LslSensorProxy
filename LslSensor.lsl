@@ -1,4 +1,4 @@
-
+//todo: returns an one-row agents array even when there are no agents
 string URL = "";
 string locationStatus()
 {

@@ -1,17 +1,33 @@
 function agentStat(bitflags) {
-    AGENT_ALWAYS_RUN	= 0x1000;  // has running ("Always Run") enabled, or is using tap-tap-hold "icon-share-alt"
-    AGENT_ATTACHMENTS	= 0x0002;  // has attachments  "icon-tag"
-    AGENT_AUTOPILOT		= 0x2000;  // is in "autopilot" mode "icon-plane icon-white"
-    AGENT_AWAY	    	= 0x0040;  // is in "away" mode "icon-eye-close"
-    AGENT_BUSY	    	= 0x0800;  // is in "busy" mode "icon-time"
-    AGENT_CROUCHING		= 0x0400;  // is crouching  "icon-chevron-down"
-    AGENT_FLYING		= 0x0001;  // is flying or hovering  "icon-plane"
-    AGENT_IN_AIR		= 0x0100;  // is in the air (jumping, flying or falling) "icon-arrow-up"
-    AGENT_MOUSELOOK		= 0x0008;  // is in mouselook "icon-eye-open"
-    AGENT_ON_OBJECT		= 0x0020;  // is sitting on an object (and linked to it) "icon-arrow-down icon-white"
-    AGENT_SCRIPTED		= 0x0004;  // has scripted attachments  "icon-file"
-    AGENT_SITTING		= 0x0010;  // is sitting "icon-arrow-down"
-    AGENT_TYPING		= 0x0200;  // is typing  "icon-comment"
-    AGENT_WALKING	    = 0x0080;  // is walking running or crouch walking  "icon-arrow-right"
+    var html                = "";
+    var AGENT_ALWAYS_RUN	= 0x1000;  // has running ("Always Run") enabled, or is using tap-tap-hold "icon-share-alt"
+    var AGENT_ATTACHMENTS	= 0x0002;  // has attachments  "icon-tag"
+    var AGENT_AUTOPILOT		= 0x2000;  // is in "autopilot" mode "icon-plane icon-white"
+    var AGENT_AWAY	    	= 0x0040;  // is in "away" mode "icon-eye-close"
+    var AGENT_BUSY	    	= 0x0800;  // is in "busy" mode "icon-time"
+    var AGENT_CROUCHING		= 0x0400;  // is crouching  "icon-chevron-down"
+    var AGENT_FLYING		= 0x0001;  // is flying or hovering  "icon-plane"
+    var AGENT_IN_AIR		= 0x0100;  // is in the air (jumping, flying or falling) "icon-arrow-up"
+    var AGENT_MOUSELOOK		= 0x0008;  // is in mouselook "icon-eye-open"
+    var AGENT_ON_OBJECT		= 0x0020;  // is sitting on an object (and linked to it) "icon-arrow-down icon-white"
+    var AGENT_SCRIPTED		= 0x0004;  // has scripted attachments  "icon-file"
+    var AGENT_SITTING		= 0x0010;  // is sitting "icon-arrow-down"
+    var AGENT_TYPING		= 0x0200;  // is typing  "icon-comment"
+    var AGENT_WALKING	    = 0x0080;  // is walking running or crouch walking  "icon-arrow-right"
 
+    if ( (bitflags & AGENT_ALWAYS_RUN  ) > 0 ) { html += "<i class=\"icon-share-alt\"></i>"; }
+    if ( (bitflags & AGENT_ATTACHMENTS ) > 0 ) { html += "<i class=\"icon-tag\"></i>";}                  
+    if ( (bitflags & AGENT_AUTOPILOT   ) > 0 ) { html += "<i class=\"icon-plane icon-white\" style=\"background-color:black\"></i>";}
+    if ( (bitflags & AGENT_AWAY        ) > 0 ) { html += "<i class=\"icon-eye-close\"></i>";}            
+    if ( (bitflags & AGENT_BUSY        ) > 0 ) { html += "<i class=\"icon-time\"></i>";}                 
+    if ( (bitflags & AGENT_CROUCHING   ) > 0 ) { html += "<i class=\"icon-chevron-down\"></i>";}         
+    if ( (bitflags & AGENT_FLYING      ) > 0 ) { html += "<i class=\"icon-plane\"></i>";}                
+    if ( (bitflags & AGENT_IN_AIR      ) > 0 ) { html += "<i class=\"icon-arrow-up\"></i>";}             
+    if ( (bitflags & AGENT_MOUSELOOK   ) > 0 ) { html += "<i class=\"icon-eye-open\"></i>";}             
+    if ( (bitflags & AGENT_ON_OBJECT   ) > 0 ) { html += "<i class=\"icon-arrow-down icon-white\" style=\"background-color:black\"></i>";}
+    if ( (bitflags & AGENT_SCRIPTED    ) > 0 ) { html += "<i class=\"icon-file\"></i>";}                 
+    if ( (bitflags & AGENT_SITTING     ) > 0 ) { html += "<i class=\"icon-arrow-down\"></i>";}           
+    if ( (bitflags & AGENT_TYPING      ) > 0 ) { html += "<i class=\"icon-comment\"></i>";}              
+    if ( (bitflags & AGENT_WALKING     ) > 0 ) { html += "<i class=\"icon-arrow-right\"></i>";}
+    return html;
 }
