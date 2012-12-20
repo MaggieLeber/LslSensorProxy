@@ -90,6 +90,63 @@
         grid(i);
         }
 
+    // make a SL<0,0,0> marker
+    var sphereGeo = new THREE.SphereGeometry(2);
+    var sphere = new THREE.Mesh(
+            sphereGeo,
+            new THREE.MeshLambertMaterial( { color: 0x00ff00, shading: THREE.FlatShading, overdraw: true } )
+            );
+    sphere.position.x = -127.0;
+    sphere.position.y = 0.0;
+    sphere.position.z = -127.0;
+    window.scene.add(sphere);
+
+    // debugging annotation texture - see http://stackoverflow.com/questions/13683727/three-js-text-next-to-line
+
+        function loadTexture( ) {
+
+                var texture = new THREE.Texture( texture_placeholder );
+            texture.needsUpdate = true;
+            var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: true, side:THREE.DoubleSide} );
+
+                return material;
+
+            }
+
+        function textMarker(markertext) {
+        texture_placeholder = document.createElement('canvas');
+        texture_placeholder.width = 100;
+        texture_placeholder.height = 20;
+        texture_placeholder.innerHtml = "hello"
+
+        var context = texture_placeholder.getContext('2d');
+        context.fillStyle = '#f00';
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.font = ' bold 150px';
+        context.fillText(markertext, texture_placeholder.width / 2, texture_placeholder.height / 2);
+        var plane = new THREE.PlaneGeometry(100, 20);
+        var text = new THREE.Mesh(plane, loadTexture())
+        return text;
+        }
+
+        window.scene.add(textMarker("Doob's 0,0"));
+
+        tentwenty = textMarker("10,20,0");
+        tentwenty.position.x = 10;
+        tentwenty.position.z = 20;
+        tentwenty.position.y = 0;
+        window.scene.add(tentwenty);
+
+        twentythirty = textMarker("127,127,100");
+        twentythirty.position.x = 127;
+        twentythirty.position.z = 127;
+        twentythirty.position.y = 100;
+        window.scene.add(twentythirty);
+
+
+    // add axis markers
+
         var debugaxis = function(axisLength){
             //Shorten the vertex function
             function v(x,y,z){
@@ -174,14 +231,6 @@ function threeUpdate() {
 // Maggie's unrandom cubes
 if (typeof window.sensorData !='undefined') {
     var material = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, overdraw: true } );
-
-    // make a SL<0,0,0> marker
-    var sphereGeo = new THREE.SphereGeometry(2);
-    var sphere = new THREE.Mesh(sphereGeo, material);
-    sphere.position.x = -127.0;
-    sphere.position.y = 0.0;
-    sphere.position.z = -127.0;
-    window.scene.add(sphere);
 
     var agents = window.sensorData.body.agents;
     for (var i = 0; i < agents.length; i++) {
