@@ -15,11 +15,11 @@
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
 
-		window.camera = new THREE.CombinedCamera( window.innerWidth /2, window.innerHeight/2, 70, 1, 1000, -1000, 1000, 1000 );
+		window.camera = new THREE.CombinedCamera( window.innerWidth /2, window.innerHeight /2, 70, 1, 1000, -1000, 1000, 1000 );
 
-		window.camera.position.x = -256;
-		window.camera.position.y = 100;
-		window.camera.position.z = -256;
+		window.camera.position.x = -1024;
+		window.camera.position.y = 150;
+		window.camera.position.z = -1024;
         window.camera.toOrthographic();
 		window.scene = new THREE.Scene();
 
@@ -193,7 +193,7 @@
 		camera.position.z = Math.sin( timer ) * 200;
 		camera.lookAt( window.scene.position );
 
-		renderer.render( window.scene, camera );
+		renderer.render( window.scene, window.camera );
 
 	}
 function threeUpdate() {
