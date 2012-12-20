@@ -131,9 +131,9 @@
                     window.scene.add(line);
             }
 
-            createAxis(v(-127, 0, -127), v(axisLength, 0, -127), 0xFF0000);   // red for X
-            createAxis(v(-127, 0, -127), v(-127, 4096, -127), 0x0000FF);   // blue  for three.js Y (= SL Z)
-            createAxis(v(-127, 0, -127), v(-127, 0, axisLength), 0x00FF00);   // green for z (=SL Y)
+            createAxis(v(-127, 0, -127), v(axisLength-127, 0, -127), 0x00ff00);   // green for Y
+            createAxis(v(-127, 0, -127), v(-127, 409.6, -127), 0x0000FF);         // blue  for three.js Y (= SL Z)
+            createAxis(v(-127, 0, -127), v(-127, 0, axisLength-127), 0xff0000);   // red for z (=SL Y)
         };
 
         //To use enter the axis length
@@ -206,9 +206,10 @@ if (typeof window.sensorData !='undefined') {
         var cubeGeo = new THREE.CubeGeometry( 5, 5, 5 );
         var cube = new THREE.Mesh(cubeGeo, material);
         var parsedPos = agents[i].pos.replace("<", "").replace(">", "").split(",");
-        cube.position.x = parsedPos[0]-127.0;    // remember, vertical axis in three.js is Y
+        cube.position.x = parsedPos[1]-127.0;    // remember, vertical axis in three.js is Y
         cube.position.y = parsedPos[2] / 10;          // scale vertical position by ten for now
-        cube.position.z = parsedPos[1]-127.0;
+        cube.position.z = parsedPos[0]-127.0;
+        // why are x and z reversed? I don't know.
         window.scene.add(cube);
     }
 }
