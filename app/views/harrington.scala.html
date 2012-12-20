@@ -37,102 +37,33 @@
 
 <div id="data"></div>
 
-<!-- <div style="position: absolute; top: 10px; width: 100%; text-align: center; "> -->
-<div style=" top: 10px; width: 100%; text-align: center; ">
-	<a href="http://threejs.org" target="_blank">three.js</a> - Combo Camera<br>
-	View: <a href="#" onclick="setOrthographic();return false;"> Orthographic</a> |
-		<a href="#" onclick="setPerspective();return false;">Perspective</a><br>
-	Lens: <a href="#" onclick="setLens(12);return false;">12mm</a> |
-		<a href="#" onclick="setLens(16);return false;">16mm</a> |
-		<a href="#" onclick="setLens(24);return false;">24mm</a> |
-		<a href="#" onclick="setLens(35);return false;">35mm</a> |
-		<a href="#" onclick="setLens(50);return false;">50mm</a> |
-		<a href="#" onclick="setLens(60);return false;">60mm</a> |
-		<a href="#" onclick="setLens(85);return false;">85mm</a> |
-		<a href="#" onclick="setLens(105);return false;">105mm</a><br>
-	Fov: <a href="#" onclick="setFov(30);return false;">30°</a> |
-		<a href="#" onclick="setFov(50);return false;">50°</a> |
-		<a href="#" onclick="setFov(70);return false;">70°</a> |
-		<a href="#" onclick="setFov(100);return false;">100°</a><br>
-	Zoom: <a href="#" onclick="camera.setZoom(0.5);return false;">0.5x</a> |
-			<a href="#" onclick="camera.setZoom(1);return false;">1x</a> |
-			<a href="#" onclick="camera.setZoom(2);return false;">2x</a> |
-
-		<br/>
-	Views: <a href="#" onclick="camera.toTopView();return false;">Top view</a> |
-		<a href="#" onclick="camera.toBottomView();return false;">Bottom view</a> |
-		<a href="#" onclick="camera.toLeftView();return false;">Left view</a> |
-		<a href="#" onclick="camera.toRightView();return false;">Right view</a> |
-		<a href="#" onclick="camera.toFrontView();return false;">Front view</a> |
-		<a href="#" onclick="camera.toBackView();return false;">Back view</a> |
-		<a href="#" onclick="camera.rotationAutoUpdate = true;return false;">Look at Scene</a>
-		<br/>
-	<div id="fov"></div>
-</div>
-
 
 
 <script>
 
-	var container, stats;
-	var camera, scene, renderer;
+	var container, camera;
 
 	init();
 	animate();
 
-	function setFov( fov ) {
-
-		camera.setFov( fov );
-
-		document.getElementById('fov').innerHTML = 'FOV '+ fov.toFixed(2) +'&deg;' ;
-
-	}
-
-	function setLens( lens ) {
-
-		// try adding a tween effect while changing focal length, and it'd be even cooler!
-
-		var fov = camera.setLens( lens );
-
-		document.getElementById('fov').innerHTML = 'Converted ' + lens + 'mm lens to FOV '+ fov.toFixed(2) +'&deg;' ;
-
-	}
-
-	function setOrthographic() {
-
-		camera.toOrthographic();
-
-		document.getElementById('fov').innerHTML = 'Orthographic mode' ;
-
-	}
-
-	function setPerspective() {
-
-		camera.toPerspective();
-
-		document.getElementById('fov').innerHTML = 'Perspective mode' ;
-
-	}
 
 	function init() {
 
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
 
-		camera = new THREE.CombinedCamera( window.innerWidth /2, window.innerHeight/2, 70, 1, 1000, -1000, 1000, 1000 );
+		window.camera = new THREE.CombinedCamera( window.innerWidth /2, window.innerHeight/2, 70, 1, 1000, -1000, 1000, 1000 );
 
-		camera.position.x = 200;
-		camera.position.y = 100;
+		camera.position.x = -50;
+		camera.position.y = -50;
 		camera.position.z = 200;
 
-		scene = new THREE.Scene();
+		window.scene = new THREE.Scene();
 
 		// Grid
 
-		var size = 500, step = 50;
-
+		var size = 256, step = 10;
 		var geometry = new THREE.Geometry();
-
 		for ( var i = - size; i <= size; i += step ) {
 
 			geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
@@ -142,31 +73,10 @@
 			geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
 
 		}
-
 		var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2 } );
-
 		var line = new THREE.Line( geometry, material );
 		line.type = THREE.LinePieces;
-		scene.add( line );
-
-		// Cubes
-
-		var geometry = new THREE.CubeGeometry( 50, 50, 50 );
-		var material = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, overdraw: true } );
-
-		for ( var i = 0; i < 100; i ++ ) {
-
-			var cube = new THREE.Mesh( geometry, material );
-
-			cube.scale.y = Math.floor( Math.random() * 2 + 1 );
-
-			cube.position.x = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
-			cube.position.y = ( cube.scale.y * 50 ) / 2;
-			cube.position.z = Math.floor( ( Math.random() * 1000 - 500 ) / 50 ) * 50 + 25;
-
-			scene.add(cube);
-
-		}
+		window.scene.add( line );
 
 		// Lights
 
@@ -178,33 +88,26 @@
 		directionalLight.position.y = Math.random() - 0.5;
 		directionalLight.position.z = Math.random() - 0.5;
 		directionalLight.position.normalize();
-		scene.add( directionalLight );
+		window.scene.add( directionalLight );
 
 		var directionalLight = new THREE.DirectionalLight( Math.random() * 0xffffff );
 		directionalLight.position.x = Math.random() - 0.5;
 		directionalLight.position.y = Math.random() - 0.5;
 		directionalLight.position.z = Math.random() - 0.5;
 		directionalLight.position.normalize();
-		scene.add( directionalLight );
+		window.scene.add( directionalLight );
 
-		renderer = new THREE.CanvasRenderer();
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		window.renderer = new THREE.CanvasRenderer();
+		window.renderer.setSize( window.innerWidth, window.innerHeight );
 
 		container.appendChild( renderer.domElement );
-
-		stats = new Stats();
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.top = '0px';
-		container.appendChild( stats.domElement );
-
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		function onWindowResize(){
 
-			camera.setSize( window.innerWidth, window.innerHeight );
-			camera.updateProjectionMatrix();
-
-			renderer.setSize( window.innerWidth, window.innerHeight );
+			window.camera.setSize( window.innerWidth, window.innerHeight );
+			window.camera.updateProjectionMatrix();
+			window.renderer.setSize( window.innerWidth, window.innerHeight );
 
 		}
 
@@ -217,7 +120,7 @@
 		requestAnimationFrame( animate );
 
 		render();
-		stats.update();
+	//	stats.update();
 
 	}
 
@@ -227,63 +130,30 @@
 
 		camera.position.x = Math.cos( timer ) * 200;
 		camera.position.z = Math.sin( timer ) * 200;
-		camera.lookAt( scene.position );
+		camera.lookAt( window.scene.position );
 
-		renderer.render( scene, camera );
+		renderer.render( window.scene, camera );
 
 	}
+function threeUpdate() {
+// Maggie's unrandom cubes
+if (typeof window.sensorData !='undefined') {
+    var agents = window.sensorData.body.agents;
+    for (var i = 0; i < agents.length; i++) {
+		var geometry = new THREE.CubeGeometry( 5, 5, 5 );
+		var material = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading, overdraw: true } );
+        var cube = new THREE.Mesh(geometry, material);
+        var parsedPos = agents[i].pos.replace("<", "").replace(">", "").split(",");
+        cube.scale.y = 5;
+        cube.position.x = parsedPos[0];
+        cube.position.y = parsedPos[1];
+        cube.position.z = parsedPos[2];
+        window.scene.add(cube);
+    }
+}
+}
 
 </script>
-
-
-
-
-
-<!--
-<div id="status legend" style="width: 80%">
-    <table class="table table-striped tabled-bordered">
-        <caption>Avatar status icon legend</caption>
-        <tr>
-            <td><i class="icon-share-alt"></i></td>
-            <td title="AGENT_ALWAYS_RUN (0x1000)">has "Always Run" enabled; using tap-tap-hold</td>
-            <td><i class="icon-tag"></i></td>
-            <td title="AGENT_ATTACHMENTS(0x0002)">has attachments</td>
-            <td><i class="icon-plane icon-white" style="background-color:black"></i></td>
-            <td title="AGENT_AUTOPILOT (0x2000)">is in "autopilot" mode</td>
-        </tr>
-        <tr>
-            <td><i class="icon-eye-close"></i></td>
-            <td title="AGENT_AWAY (0x0040)">is in "away" mode</td>
-            <td><i class="icon-time"></i></td>
-            <td title="AGENT_BUSY (0x0800)">is in "busy" mode</td>
-            <td><i class="icon-chevron-down"></i></td>
-            <td title="AGENT_CROUCHING (0x0400)">is crouching</td>
-        </tr>
-        <tr>
-            <td><i class="icon-plane"></i></td>
-            <td title="AGENT_FLYING (0x0001)">is flying or hovering</td>
-            <td><i class="icon-arrow-up"></i></td>
-            <td title="AGENT_IN_AIR (0x0100)">is in the air (jumping, flying or falling)</td>
-            <td><i class="icon-eye-open"></i></td>
-            <td title="AGENT_MOUSELOOK (0x0008)">is in mouselook</td>
-        </tr>
-        <tr>
-            <td><i class="icon-arrow-down icon-white" style="background-color:black"></i></td>
-            <td title="AGENT_ON_OBJECT (0x0020)">is sitting on an object (and linked to it)</td>
-            <td><i class="icon-file"></i></td>
-            <td title="AGENT_SCRIPTED (0x0004)">has scripted attachments</td>
-            <td><i class="icon-arrow-down"></i></td>
-            <td title="AGENT_SITTING (0x0010)">is sitting</td>
-        </tr>
-        <tr>
-            <td><i class="icon-comment"></i></td>
-            <td title="AGENT_TYPING (0x0200)">is typing</td>
-            <td><i class="icon-arrow-right"></i></td>
-            <td title="AGENT_WALKING (0x0080)">is walking running or crouch walking</td>
-        </tr>
-    </table>
-</div>
--->
 
 <script type="text/javascript">
     $('#fetchData').click(function (evt) {
@@ -292,6 +162,8 @@
             type: 'GET',
             url: "/sensor/6140/12046/5be50dc4-f2f4-85ed-e45a-401978ebfcd8",
             success: function (data) {
+                window.sensorData = data;
+                threeUpdate();
                 $('#data').html(showsensor(data));
             },
             error: function (data) {
@@ -303,3 +175,4 @@
 </script>
 
 }
+
