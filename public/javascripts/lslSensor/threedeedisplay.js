@@ -61,11 +61,11 @@ function init() {
     zerozero.position.z = -127.0;
     window.scene.add(zerozero);
 
-    var dot6464 = new THREE.Mesh(sphereGeo, bluemat);
-    dot6464.position.x = -64.0;
-    dot6464.position.y = 0.0;
-    dot6464.position.z = -64.0;
-    window.scene.add(dot6464);
+//    var dot6464 = new THREE.Mesh(sphereGeo, bluemat);
+//    dot6464.position.x = -64.0;
+//    dot6464.position.y = 0.0;
+//    dot6464.position.z = -64.0;
+//    window.scene.add(dot6464);
 
 
     // debugging annotation texture - see http://stackoverflow.com/questions/13683727/three-js-text-next-to-line
@@ -175,12 +175,8 @@ function init() {
 //
 
 function animate() {
-
     requestAnimationFrame(animate);
-
     render();
-    //	stats.update();
-
 }
 
 function render() {
@@ -196,6 +192,9 @@ function render() {
 }
 function threeUpdate() {
 // Maggie's unrandom cubes
+//todo: keep an array of objects drawn from sensor data and remove them on update
+//todo: label avatars
+
     if (typeof window.sensorData != 'undefined') {
         var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading, overdraw: true });
 
