@@ -4,20 +4,25 @@ import play.api.mvc._
 import java.net.URL
 import io.Source
 import java.io.InputStream
-import play.api.libs.json.{JsString, Json, JsObject}
+import play.api.libs.json.{JsValue, JsString, Json, JsObject}
 import scala.collection.immutable._
 import collection.JavaConversions._
+import com.mongodb.casbah.Imports._
+
 
 object Application extends Controller {
   //todo: automatic sensor registration
+  val mongoConn = MongoConnection()
+  val coll = mongoConn("lslproxy")("sensordata")
+  BsonBigDecimalSupport()
+
   def harrington = Action {
     Ok(views.html.harrington())
   }
 
-
-  // http://localhost:9000/sensor/6140/12046/f71ec7b9-64dc-20b3-327c-5a0e4f81b42f
   def sensor(sim: String, port: String, cap: String) =
     Action {
+
       // connect to the remote scripted object in-world
       val conn = new URL("http://sim"+sim+".agni.lindenlab.com:"+port+"/cap/"+cap).openConnection()
       //todo: handle connection errors
@@ -28,13 +33,16 @@ object Application extends Controller {
           // we take the tail of map.keys because the first key is null with a value of the HTTP status
           // we take the head of map.get(k) because the map value is a List[String]
           // strip out the hyphens from the keys because those aren't valid JSON
-          map.keys.tail.map((k) => (k.replaceAll("-",""), JsString(map.get(k).get.head))).toList
+//          map.keys.tail.map((k) => (k.replaceAll("-",""), JsString(map.get(k).get.head))).toList
+          map.keys.tail.map((k) => (k.replaceAll("-",""), Json.toJson(map.get(k).get.head))).toSeq
         )
       }
       // read the remote response body
       val body = Source.fromInputStream(conn.getContent.asInstanceOf[InputStream]).mkString("")
       // parse it and merge it with the JSONized headers
       val mbody = headerParse(headers) ++ new JsObject(List("body" -> Json.parse(body)).toSeq)
+      val mdbo = new MongoDBObject(mbody.value.map((k) => (k._1,Json.stringify(k._2))))
+      coll += mdbo
       Ok(mbody).as("application/json")
     }
 }
