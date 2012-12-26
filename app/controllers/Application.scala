@@ -14,35 +14,30 @@ object Application extends Controller {
   //todo: automatic sensor registration
   val mongoConn = MongoConnection()
   val coll = mongoConn("lslproxy")("sensordata")
-  BsonBigDecimalSupport()
+  BsonBigDecimalSupport() // register our BSON encoder
 
-  def harrington = Action {
-    Ok(views.html.harrington())
-  }
+  def harrington = Action { Ok(views.html.harrington()) }
 
   def sensor(sim: String, port: String, cap: String) =
     Action {
-
       // connect to the remote scripted object in-world
       val conn = new URL("http://sim"+sim+".agni.lindenlab.com:"+port+"/cap/"+cap).openConnection()
       //todo: handle connection errors
       // parse the headers - it's a mutable Java Map; make it scala.collection.immutable.Map
       val headers = conn.getHeaderFields.toMap ++ Map.empty
-      def headerParse(map: Map[java.lang.String, java.util.List[java.lang.String]]): JsObject = {
-        return new JsObject(
-          // we take the tail of map.keys because the first key is null with a value of the HTTP status
-          // we take the head of map.get(k) because the map value is a List[String]
-          // strip out the hyphens from the keys because those aren't valid JSON
-//          map.keys.tail.map((k) => (k.replaceAll("-",""), JsString(map.get(k).get.head))).toList
-          map.keys.tail.map((k) => (k.replaceAll("-",""), Json.toJson(map.get(k).get.head))).toSeq
-        )
-      }
+      // turn them into JSON
+      val parsedHeaders = new JsObject(
+            headers.keys.tail.map((k) =>               // we take the tail of map.keys because the head is (null,HTTP status)
+              (k.replaceAll("-",""),                   // strip hyphens from the keys because those aren't valid JSON names
+               Json.toJson(headers.get(k).get.head)))  // take the head of map.get(k) because the map value is List[String]
+               toSeq)
       // read the remote response body
       val body = Source.fromInputStream(conn.getContent.asInstanceOf[InputStream]).mkString("")
       // parse it and merge it with the JSONized headers
-      val mbody = headerParse(headers) ++ new JsObject(List("body" -> Json.parse(body)).toSeq)
+      val mbody = parsedHeaders ++ new JsObject(List("body" -> Json.parse(body)).toSeq)
+      // build a MongoDB document
       val mdbo = new MongoDBObject(mbody.value.map((k) => (k._1,Json.stringify(k._2))))
-      coll += mdbo
+      coll += mdbo // and write it
       Ok(mbody).as("application/json")
     }
 }
