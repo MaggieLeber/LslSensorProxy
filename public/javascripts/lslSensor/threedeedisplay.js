@@ -198,7 +198,7 @@ function threeUpdate() {
     if (typeof window.sensorData != 'undefined') {
         var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading, overdraw: true });
 
-        var agents = window.sensorData.body.agents;
+        var agents = window.sensorData.agents;
         for (var i = 0; i < agents.length; i++) {
             var cubeGeo = new THREE.CubeGeometry(5, 5, 5);
             var cube = new THREE.Mesh(cubeGeo, material);

@@ -8,7 +8,7 @@ trait BsonBigDecimalEncode extends MongoConversionHelper {
 
  private val encode = new Transformer {
     def transform(o: AnyRef): AnyRef = o match {
-      case bd : BigDecimal =>  bd.bigDecimal.doubleValue().asInstanceOf[AnyRef]
+      case bd : BigDecimal =>  bd.longValue.asInstanceOf[AnyRef]
       case _ => o
     }
   }
