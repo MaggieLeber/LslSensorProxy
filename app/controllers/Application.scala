@@ -44,13 +44,13 @@ object Application extends Controller {
       val mbody : JsObject =  parsedHeaders ++ Json.parse(body).asInstanceOf[JsObject]
       // build a MongoDB document from it
       val mdbo = new MongoDBObject(
-        mbody.value.map((k) =>
+        mbody.value.map ((k) =>
           (k._1,
             k._2 match {
-              case n : JsNumber =>  n.value
-              case s : JsString =>  s.value
-              case a : JsArray  =>  a.value
-              case _ => "Oops"+ k._2.toString()
+              case n : JsNumber => n.value
+              case s : JsString => s.value
+              case a : JsArray  => a.value
+              case _            => "Oops"+ k._2.toString()
             }
             )))
       coll += mdbo // and write that to the DB
