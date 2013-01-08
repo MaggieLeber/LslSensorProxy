@@ -1,8 +1,27 @@
 LslProxy -- MaggieL's first actual PlayFramework and Scala toy
 ==============================================================
 
-I'm writing this to learn Scala and PlayFramework. As you can see, I don't know squat about
-Markdown yet either. To make matters worse I'm a total Git noob.
+I'm writing this during my vacation to learn Scala and PlayFramework.
 
-So many routes to #fail!
+The basic idea: Scripted objects in the SecondLife.com virtual world are programmable in a primitive scripting language called Linden Scripting Language, (LSL).
+
+These scripts are capable of sending and receiving rudimentary HTTP data (although you have little control over the MIME type of the payloads.)
+
+The scripts can do calls to the VW server in which they are running to sense the state of the world around them and the health of the server itself. They ar
+thus capable of becomeing mobile agents. There is also useful data in the HTTP headers on HTTP responses.
+
+But since as a user you have almost no control over the reponse headers, you can't really write a RESTful webservice for this data.
+This toy project creates a webservice that proxies in-world sensors, and merges data from the sensor payload with data from the response headers,
+and presents it as a unified JSON response.
+
+There is also a simple HTML UI that uses jQuery to call the service, and also uses three.js to do a 3D representation of spatially-arranged
+data from the sensors. 
+
+Right now the proxy simply records the sensor data in a MongoDB collection. I'm looking forward to using this with the new JSON
+libraries in Play 2.1 (currently still in RC1 status) and ReactiveMongo Real Soon Now.
+
+The senor identity is hardcoded in the HTML UI. Obvious future enhancements would include provisions for sensors to
+register themselves with the server and automated variable-rate polling for data.
+
+I've learned a boat-load of Scala (and three.js) doing this. Fun stuff.
 
