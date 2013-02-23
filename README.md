@@ -69,7 +69,7 @@ The raw sensor data body currently looks like:
 
 And is accompanied by headers, thus:
 
-    Server:Server: Second Life LSL/Second Life Server 13.02.08.270166 (http://secondlife.com)
+       Server: Second Life LSL/Second Life Server 13.02.08.270166 (http://secondlife.com)
        X-SecondLife-Local-Position:(211.322556, 239.690033, 8.132746)
        X-SecondLife-Local-Rotation:(0.000000, 0.000000, 0.382683, 0.923880)
        X-SecondLife-Local-Velocity:(0.000000, 0.000000, 0.000000)
