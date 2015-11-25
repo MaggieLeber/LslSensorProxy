@@ -1,4 +1,4 @@
-string version = "0.1.1";
+string version = "0.1.2";
 string author = "Maggie Darwin [Maggie Leber maggie@matrisync.com>]";
 string URL = "";
 
@@ -52,7 +52,7 @@ string locationStatus()
 
 string getAgentData(key agentKey) {
     list details =  llGetObjectDetails(agentKey,[OBJECT_NAME, OBJECT_POS, OBJECT_ROT, OBJECT_VELOCITY]);
-    string agentData =  llList2Json(JSON_ARRAY,
+    string agentData =  llList2Json(JSON_OBJECT,
                                    [  "key", (string)agentKey,
                                       "name",llList2String(details,0),
                                       "pos",llList2Vector(details,1),
