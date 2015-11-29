@@ -1,9 +1,6 @@
 # Routes
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
 
-GET     /sensor/:sim/:port/:cap   controllers.Application.sensor(sim,port,cap)
+GET     /sensor/:sim/:port/:cap   controllers.Application.sensor(sim: String,port: String,cap: String)
 GET     /harrington               controllers.Application.harrington
 
 # bootstrap
